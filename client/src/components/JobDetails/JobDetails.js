@@ -57,6 +57,19 @@ function JobDetails({ user }) {
     // console.log(formData);
   }
 
+  function handleDelete(idd) {
+    fetch("/reviews/" + idd, {
+      method: "DELETE",
+    })
+      .then((r) => r.json())
+      .then(() => updateAfterDelete(idd));
+  }
+
+  function updateAfterDelete(idd) {
+    const updated = reviews.filter((review) => review.id !== idd);
+    setReviews(updated);
+  }
+
   return (
     <DetailWrapper style={{ margin: "10% 20%" }}>
       <div>
@@ -79,8 +92,34 @@ function JobDetails({ user }) {
         {activeTab === "info" && (
           <div>
             <br></br>
-            <h3>{details.job_type}</h3>
-            <h3>{details.location}</h3>
+            <h2>
+              <u>{details.company_name}</u>
+            </h2>
+            <h5>Job Title :</h5>
+            <p>
+              <i>{details.job_type}</i>
+            </p>
+            <h5>Description :</h5>
+            <p>
+              <i>{details.description}</i>
+            </p>
+            <h5>Location :</h5>
+            <p>
+              <i>{details.location}</i>
+            </p>
+            <h5>Job Mode :</h5>
+            <p>
+              <i>{details.job_mode}</i>
+            </p>
+            <h5>Salary :</h5>
+            <p>
+              <i>Ksh. {details.salary} p.m</i>
+            </p>
+
+            {/* <ul>
+              <li>{details.company_name}</li>
+              <li>{details.job_type}</li>
+            </ul> */}
           </div>
         )}
         {activeTab === "reviews" && (
@@ -102,7 +141,6 @@ function JobDetails({ user }) {
                         margin: "5px",
                       }}
                       key={review_obj.id}
-                      onClick={() => alert(review_obj.id)}
                     >
                       {review_obj.review}
                     </li>
@@ -113,8 +151,24 @@ function JobDetails({ user }) {
                         justifyContent: "space-between",
                       }}
                     >
-                      <p onClick={()=>alert("to update")}>✏️</p>
-                      <p onClick={()=>alert("to delete")}>🗑</p>
+                      {review_obj.user_id == id ? (
+                        <>
+                          <p
+                            onClick={() => alert(id)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            ✏️
+                          </p>
+                          <p
+                            onClick={() => handleDelete(review_obj.id)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            🗑
+                          </p>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -137,7 +191,13 @@ function JobDetails({ user }) {
               />{" "}
               <br></br>
               <br></br>
-              <button onClick={() => handleSubmit()}>Save</button>
+              {user ? (
+                <button onClick={() => handleSubmit()}>Save</button>
+              ) : (
+                <button onClick={() => alert("Please Login First")}>
+                  Save
+                </button>
+              )}
             </div>
           </div>
         )}
