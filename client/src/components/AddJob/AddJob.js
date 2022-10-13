@@ -43,7 +43,8 @@ export default function AddJob({user}) {
     });
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
+      // console.log(data);
+      window.location = '/jobs';
     } else {
       setErrors(data.errors);
     }

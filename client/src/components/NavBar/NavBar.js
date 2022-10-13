@@ -13,6 +13,7 @@ const Navbar = ({ setUser, user }) => {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
+        window.location = "/login";
       }
     });
   }

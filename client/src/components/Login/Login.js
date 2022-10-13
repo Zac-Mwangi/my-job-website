@@ -28,6 +28,7 @@ export default function Login({ setUser }) {
     if (response.ok) {
       console.log("User created:", data);
       setUser(data);
+      window.location = "/jobs";
     } else {
       setErrors(data.error);
     }
@@ -75,12 +76,13 @@ export default function Login({ setUser }) {
             Forgot <a href="#">password?</a>
           </p> */}
 
-          {errors!="" ? 
-          <ul style={{ color: "red" }}>
-             <li>{errors}</li>
-          </ul>:
-          ""
-        }
+          {errors != "" ? (
+            <ul style={{ color: "red" }}>
+              <li>{errors}</li>
+            </ul>
+          ) : (
+            ""
+          )}
         </div>
       </form>
     </div>

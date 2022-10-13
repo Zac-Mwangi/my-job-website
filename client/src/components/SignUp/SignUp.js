@@ -27,7 +27,8 @@ export default function SignUp() {
     // response.json() returns a Promise, we must await it
     const data = await response.json();
     if (response.ok) {
-      console.log("User created:", data);
+      // console.log("User created:", data);
+      window.location = '/login';
     } else {
       setErrors(data.errors);
     }
