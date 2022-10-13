@@ -1,7 +1,8 @@
-import React from "react";
+import React, {  } from "react";
 import image from "./home-image1.svg";
 import { Link } from "react-router-dom";
-export default function Home() {
+export default function Home({user}) {
+
   const txt = {
     color: "#0D7CAC",
     fontWeight: "bold",
@@ -17,7 +18,8 @@ export default function Home() {
           <div className="col-12 col-lg-6 pt-3">
             <div className="mb-3">
               <h3 style={txt} className="">
-                MY JOB WEBSITE
+                WELCOME {user ? user.username : ""} TO MY JOB WEBSITE
+                
               </h3>
             </div>
             <div className="font-weight-normal ">
