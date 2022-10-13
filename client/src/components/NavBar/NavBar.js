@@ -8,33 +8,50 @@ import {
   NavBtnLink,
 } from "./NavbarElements";
 
-const Navbar = () => {
+const Navbar = ({ setUser, user }) => {
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
+
   return (
     <>
       <Nav>
         <Bars />
         <NavMenu>
-          <NavLink to="/home" activeStyle>
-            Home
-          </NavLink>
-          <NavLink to="/jobs" activeStyle>
-            Jobs
-          </NavLink>
-          <NavLink to="/contact" activeStyle>
-            Contact Us
-          </NavLink>
-          <NavLink to="/post-job" activeStyle>
-            Post Job
-          </NavLink>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/jobs">Jobs</NavLink>
+          <NavLink to="/contact">Contact Us</NavLink>
+          <NavLink to="/post-job">Post Job</NavLink>
         </NavMenu>
 
         <NavBtn>
-          <NavBtnLink to="/login" className="btn btn-primary btn-sm active">
-            Login
-          </NavBtnLink>
-          <NavBtnLink to="/sign-up" className="btn btn-primary btn-sm active">
-            Sign Up
-          </NavBtnLink>
+          {user ? (
+            <>
+              <NavBtnLink
+                to="/logout"
+                className="btn btn-primary btn-sm active"
+                onClick={() => handleLogoutClick()}
+              >
+                Logout
+              </NavBtnLink>
+            </>
+          ) : (
+            <>
+              <NavBtnLink to="/login" className="btn btn-primary btn-sm active">
+                Login
+              </NavBtnLink>
+              <NavBtnLink
+                to="/sign-up"
+                className="btn btn-primary btn-sm active"
+              >
+                Sign Up
+              </NavBtnLink>
+            </>
+          )}
         </NavBtn>
       </Nav>
     </>
