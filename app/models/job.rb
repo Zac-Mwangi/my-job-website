@@ -6,6 +6,9 @@ class Job < ApplicationRecord
     validates :job_type, presence: true;
     validates :description, presence: true;
     validates :salary, presence: true;
+    validates :location, presence: true;
+    validates :job_mode, inclusion: {in:["parttime", "fulltime"]} 
+
   
     belongs_to :user
 

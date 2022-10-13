@@ -53,7 +53,6 @@ export default function Login({ setUser }) {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                // setErrors("")
               }}
             />
           </div>

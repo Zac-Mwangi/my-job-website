@@ -25,7 +25,14 @@ const Navbar = ({ setUser, user }) => {
           <NavLink to="/">Home</NavLink>
           <NavLink to="/jobs">Jobs</NavLink>
           <NavLink to="/contact">Contact Us</NavLink>
-          <NavLink to="/post-job">Post Job</NavLink>
+
+          {user ? (
+            <>
+              <NavLink to="/post-job">Post Job</NavLink>
+            </>
+          ) : (
+            <></>
+          )}
         </NavMenu>
 
         <NavBtn>

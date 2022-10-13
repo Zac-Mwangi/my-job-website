@@ -16,7 +16,7 @@ class JobsController < ApplicationController
     private
 
     def job_params
-        params.permit(:user_id, :company_name, :company_logo, :job_type, :salary, :description, :type)
+        params.permit(:user_id, :company_name, :company_logo, :job_type, :salary, :description, :job_mode, :location)
     end
 
     def render_unprocessable_entity_response(invalid)

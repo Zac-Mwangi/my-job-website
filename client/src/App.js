@@ -25,12 +25,12 @@ export default function App() {
     <div>
       <Navbar setUser={setUser} user={user} />
       <Routes>
-        <Route path="/" element={<Home user={user}/>} />
+        <Route path="/" element={<Home user={user} />} />
         <Route path="/jobs" element={<JobList />} />
         <Route path="/jobs/:id" element={<JobDetails />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/post-job" element={<AddJob />} />
+        <Route path="/post-job" element={<AddJob user={user}/>} />
       </Routes>
     </div>
   );
