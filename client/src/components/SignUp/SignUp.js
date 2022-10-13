@@ -6,9 +6,36 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // err
+  const [errors, setErrors] = useState([]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // fetch returns a Promise, we must await it
+
+    const formData = { 
+      username, email, password,
+    };
+
+    const response = await fetch("/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    // response.json() returns a Promise, we must await it
+    const data = await response.json();
+    if (response.ok) {
+      console.log("User created:", data);
+    } else {
+      setErrors(data.errors);
+    }
+  }
+
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={(e) => handleSubmit(e)}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
@@ -47,14 +74,20 @@ export default function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
+          {errors.length > 0 && (
+            <ul style={{ color: "red" }}>
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          )}
+
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-primary">
               Register
             </button>
           </div>
-          {/* <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
-          </p> */}
         </div>
       </form>
     </div>
