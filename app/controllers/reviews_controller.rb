@@ -14,12 +14,24 @@ class ReviewsController < ApplicationController
         render json: review, status: :created
     end
 
-      # DELETE /birds/:id
+      # DELETE /reviews/:id
     def destroy
         review = find_review
         review.destroy
         render json: {}
         # head :no_content
+    end
+
+    # update reviews
+    def update
+        review = find_review
+        review.update(review_params)
+        render json: review
+    end
+
+    def show
+        review = find_review
+        render json: review
     end
 
     private

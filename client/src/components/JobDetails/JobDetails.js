@@ -10,7 +10,9 @@ function JobDetails({ user }) {
   const [activeTab, setActiveTab] = useState("info");
   const [reviews, setReviews] = useState();
   const [comment, setComment] = useState();
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState([]);
+  const [saveBtn, setSaveBtn] = useState(true);
+  const [idToBeUpdated, setIdToBeUpdated] = useState(0);
 
   useEffect(() => {
     fetch("/jobs/" + params.id)
@@ -28,6 +30,8 @@ function JobDetails({ user }) {
   }
 
   async function handleSubmit() {
+    setErrors([]);
+
     {
       user ? (id = user.id) : (id = 1);
     }
@@ -51,10 +55,8 @@ function JobDetails({ user }) {
       setComment("");
       setReviews([...reviews, data]);
     } else {
-      setErrors(data.error);
+      setErrors(data.errors);
     }
-
-    // console.log(formData);
   }
 
   function handleDelete(idd) {
@@ -68,6 +70,37 @@ function JobDetails({ user }) {
   function updateAfterDelete(idd) {
     const updated = reviews.filter((review) => review.id !== idd);
     setReviews(updated);
+  }
+
+  function handleUpdate() {
+    // alert(idToBeUpdated);
+
+    const form_data = {
+      review: comment,
+    };
+
+    fetch("/reviews/" + idToBeUpdated, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form_data),
+    })
+      .then((r) => r.json())
+      .then((updatedItem) => updateList(updatedItem));
+  }
+
+  function updateList(updatedItem) {
+    const updatedItems = reviews.map((item) => {
+      if (item.id === updatedItem.id) {
+        return updatedItem;
+      } else {
+        return item;
+      }
+    });
+    setReviews(updatedItems);
+    setComment("");
+    setSaveBtn(true);
   }
 
   return (
@@ -154,7 +187,11 @@ function JobDetails({ user }) {
                       {review_obj.user_id == id ? (
                         <>
                           <p
-                            onClick={() => alert(id)}
+                            onClick={() => {
+                              setComment(review_obj.review);
+                              setSaveBtn(false);
+                              setIdToBeUpdated(review_obj.id);
+                            }}
                             style={{ cursor: "pointer" }}
                           >
                             ✏️
@@ -192,11 +229,23 @@ function JobDetails({ user }) {
               <br></br>
               <br></br>
               {user ? (
-                <button onClick={() => handleSubmit()}>Save</button>
+                <button
+                  onClick={() => (saveBtn ? handleSubmit() : handleUpdate())}
+                >
+                  {saveBtn ? "Save" : "Update"}
+                </button>
               ) : (
                 <button onClick={() => alert("Please Login First")}>
                   Save
                 </button>
+              )}
+              {/* if ny err */}
+              {errors.length > 0 && (
+                <ul style={{ color: "red" }}>
+                  {errors.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
               )}
             </div>
           </div>
