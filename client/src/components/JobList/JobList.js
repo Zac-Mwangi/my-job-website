@@ -9,7 +9,7 @@ export default function ({}) {
       .then((data) => {
         setJobs(data);
 
-        console.log(data);
+        // console.log(data);
       });
   }, []);
 

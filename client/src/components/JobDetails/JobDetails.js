@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import "./JobDetails.css";
+import { Textarea } from "evergreen-ui";
 
 function JobDetails() {
   let params = useParams();
   const [details, setDetails] = useState({});
   const [activeTab, setActiveTab] = useState("info");
+  const [reviews, setReviews] = useState();
 
   useEffect(() => {
     fetch("/jobs/" + params.id)
       .then((r) => r.json())
       .then((data) => {
         setDetails(data);
-        console.log(data);
+        setReviews(data.reviews);
       });
   }, [params.id]);
 
@@ -45,8 +47,42 @@ function JobDetails() {
         )}
         {activeTab === "reviews" && (
           <div>
-            <br></br>
-            <h3>{details.location}</h3>
+            {reviews.length > 0 && (
+              <ul style={{ color: "#313131" }}>
+                {reviews.map((review_obj) => (
+                  <li
+                    style={{
+                      color: "#313131",
+                      border: "2px solid black",
+                      padding: "2px",
+                      margin: "2px",
+                    }}
+                    key={review_obj.id}
+                    onClick={() => alert(review_obj.id)}
+                  >
+                    {review_obj.review}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div
+              style={{
+                display: "block",
+                width: 700,
+                paddingLeft: 30,
+              }}
+            >
+              <br></br> 
+              <br></br>
+              <h4>ADD COMMENT</h4>
+              <Textarea
+                // onChange={(e) => setSummary(e.target.value)}
+                placeholder="Enter your summary of poem"
+              />{" "}
+              <br></br>
+              <br></br>
+              <button>Save</button>
+            </div>
           </div>
         )}
       </Info>
