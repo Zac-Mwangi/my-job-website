@@ -42,7 +42,7 @@ export default function SignUp() {
           <div className="text-center">
             Already registered?{" "}
             <span className="link-primary">
-              <a href="/login">Sign In</a>
+              <a href="/log-in">Sign In</a>
             </span>
           </div>
           <div className="form-group mt-3">

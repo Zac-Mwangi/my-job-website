@@ -44,7 +44,7 @@ export default function AddJob({user}) {
     const data = await response.json();
     if (response.ok) {
       // console.log(data);
-      window.location = '/jobs';
+      window.location = '/jobs-page';
     } else {
       setErrors(data.errors);
     }

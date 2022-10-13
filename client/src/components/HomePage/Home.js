@@ -47,7 +47,7 @@ export default function Home({user}) {
                   fontWeight: "900",
                 }}
               >
-                <Link to="/jobs" style={colorTxt}>
+                <Link to="/jobs-page" style={colorTxt}>
                   Explore Jobs
                 </Link>
               </button>

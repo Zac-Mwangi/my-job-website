@@ -29,7 +29,7 @@ export default function Card({ jobname, logo, company, location, salary, id }) {
           <div className="d-flex justify-content-between mt-3">
             {" "}
             <span className="text-dark">${salary}</span>
-            <Link to={"/jobs/" + id}>
+            <Link to={"/jobs-page/" + id}>
               <button className="btn btn-primary btn-sm active">
                 Read More
               </button>

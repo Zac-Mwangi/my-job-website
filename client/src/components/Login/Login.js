@@ -28,7 +28,7 @@ export default function Login({ setUser }) {
     if (response.ok) {
       console.log("User created:", data);
       setUser(data);
-      window.location = "/jobs";
+      window.location = "/jobs-page";
     } else {
       setErrors(data.error);
     }

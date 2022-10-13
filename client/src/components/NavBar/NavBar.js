@@ -13,7 +13,7 @@ const Navbar = ({ setUser, user }) => {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
-        window.location = "/login";
+        window.location = "/log-in";
       }
     });
   }
@@ -24,7 +24,7 @@ const Navbar = ({ setUser, user }) => {
         <Bars />
         <NavMenu>
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/jobs">Jobs</NavLink>
+          <NavLink to="/jobs-page">Jobs</NavLink>
           {/* <NavLink to="/contact">Contact Us</NavLink> */}
 
           {user ? (
@@ -49,7 +49,7 @@ const Navbar = ({ setUser, user }) => {
             </>
           ) : (
             <>
-              <NavBtnLink to="/login" className="btn btn-primary btn-sm active">
+              <NavBtnLink to="/log-in" className="btn btn-primary btn-sm active">
                 Login
               </NavBtnLink>
               <NavBtnLink
