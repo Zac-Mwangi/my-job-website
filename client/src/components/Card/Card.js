@@ -7,7 +7,7 @@ export default function Card({ jobname, logo, company, location, salary, id }) {
     <div className="col-md-4 my-2" style={{ background: "white" }}>
       <div
         className="Card card p-2"
-        style={{ background: "whitesmoke", border: "2px solid grey" }}
+        style={{ background: "#F2F2F2", border: "2px solid grey" }}
       >
         <div className="text-right">
           {" "}
