@@ -28,7 +28,7 @@ export default function SignUp() {
     const data = await response.json();
     if (response.ok) {
       // console.log("User created:", data);
-      window.location = '/login';
+      window.location = '/log-in';
     } else {
       setErrors(data.errors);
     }

@@ -26,8 +26,9 @@ export default function Login({ setUser }) {
     // response.json() returns a Promise, we must await it
     const data = await response.json();
     if (response.ok) {
-      console.log("User created:", data);
+      // console.log("User created:", data);
       setUser(data);
+      setErrors("");
       window.location = "/jobs-page";
     } else {
       setErrors(data.error);
@@ -36,7 +37,7 @@ export default function Login({ setUser }) {
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form" onClick={(e) => handleSubmit(e)}>
+      <form className="Auth-form" onSubmit={(e) => handleSubmit(e)}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Log In</h3>
           <div className="text-center">
@@ -52,9 +53,7 @@ export default function Login({ setUser }) {
               className="form-control mt-1"
               placeholder="Enter email"
               value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="form-group mt-3">
