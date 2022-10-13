@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+
 
     def index
         reviews = Review.all
@@ -12,7 +14,19 @@ class ReviewsController < ApplicationController
         render json: review, status: :created
     end
 
+      # DELETE /birds/:id
+    def destroy
+        review = find_review
+        review.destroy
+        render json: {}
+        # head :no_content
+    end
+
     private
+
+    def find_review
+        Review.find(params[:id])
+    end
 
     def review_params
         params.permit(:user_id, :job_id, :review)
@@ -20,5 +34,9 @@ class ReviewsController < ApplicationController
 
     def render_unprocessable_entity_response(invalid)
         render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+    end
+
+    def render_not_found_response
+        render json: { error: "Review not found" }, status: :not_found
     end
 end
