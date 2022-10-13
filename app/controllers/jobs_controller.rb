@@ -7,6 +7,11 @@ class JobsController < ApplicationController
         render json: jobs;
     end
 
+    def show
+        user = find_user
+        render json: user
+    end
+
     def create
         # create! exceptions will be handled by the rescue_from ActiveRecord::RecordInvalid code
         job = Job.create!(job_params)
@@ -14,6 +19,10 @@ class JobsController < ApplicationController
     end
 
     private
+
+    def find_user
+        Job.find(params[:id])
+    end
 
     def job_params
         params.permit(:user_id, :company_name, :company_logo, :job_type, :salary, :description, :job_mode, :location)

@@ -9,7 +9,7 @@ function JobDetails() {
   const [activeTab, setActiveTab] = useState("info");
 
   useEffect(() => {
-    fetch("https://jbap.herokuapp.com/jobs/" + params.id)
+    fetch("/jobs/" + params.id)
       .then((r) => r.json())
       .then((data) => {
         setDetails(data);
@@ -21,7 +21,7 @@ function JobDetails() {
     <DetailWrapper style={{ margin: "10% 20%" }}>
       <div>
         {/* <h2>{details.company}</h2> */}
-        <img style={{ width: "20vh" }} src={details.image} />
+        <img style={{ width: "20vh" }} src={details.company_logo} />
       </div>
       <Info style={{ padding: "0% 20%" }}>
         <Button
