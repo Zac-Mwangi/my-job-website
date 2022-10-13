@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import "./JobDetails.css";
 import { Textarea } from "evergreen-ui";
 
-function JobDetails() {
+function JobDetails({ user }) {
   let params = useParams();
   const [details, setDetails] = useState({});
   const [activeTab, setActiveTab] = useState("info");
   const [reviews, setReviews] = useState();
+  const [comment, setComment] = useState();
+  const [errors, setErrors] = useState();
 
   useEffect(() => {
     fetch("/jobs/" + params.id)
@@ -18,6 +20,42 @@ function JobDetails() {
         setReviews(data.reviews);
       });
   }, [params.id]);
+
+  let id = 1;
+
+  {
+    user ? (id = user.id) : (id = 1);
+  }
+
+  async function handleSubmit() {
+    {
+      user ? (id = user.id) : (id = 1);
+    }
+
+    const formData = {
+      user_id: id,
+      job_id: params.id,
+      review: comment,
+    };
+
+    const response = await fetch("/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    // response.json() returns a Promise, we must await it
+    const data = await response.json();
+    if (response.ok) {
+      setComment("");
+      setReviews([...reviews, data]);
+    } else {
+      setErrors(data.error);
+    }
+
+    // console.log(formData);
+  }
 
   return (
     <DetailWrapper style={{ margin: "10% 20%" }}>
@@ -48,20 +86,37 @@ function JobDetails() {
         {activeTab === "reviews" && (
           <div>
             {reviews.length > 0 && (
-              <ul style={{ color: "#313131" }}>
+              <ul
+                style={{
+                  color: "#313131",
+                }}
+              >
                 {reviews.map((review_obj) => (
-                  <li
-                    style={{
-                      color: "#313131",
-                      border: "2px solid black",
-                      padding: "2px",
-                      margin: "2px",
-                    }}
-                    key={review_obj.id}
-                    onClick={() => alert(review_obj.id)}
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {review_obj.review}
-                  </li>
+                    <li
+                      style={{
+                        color: "#313131",
+                        padding: "2px",
+                        margin: "5px",
+                      }}
+                      key={review_obj.id}
+                      onClick={() => alert(review_obj.id)}
+                    >
+                      {review_obj.review}
+                    </li>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "20px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <p onClick={()=>alert("to update")}>✏️</p>
+                      <p onClick={()=>alert("to delete")}>🗑</p>
+                    </div>
+                  </div>
                 ))}
               </ul>
             )}
@@ -72,16 +127,17 @@ function JobDetails() {
                 paddingLeft: 30,
               }}
             >
-              <br></br> 
+              <br></br>
               <br></br>
               <h4>ADD COMMENT</h4>
               <Textarea
-                // onChange={(e) => setSummary(e.target.value)}
-                placeholder="Enter your summary of poem"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Enter your comment if you are logged in"
               />{" "}
               <br></br>
               <br></br>
-              <button>Save</button>
+              <button onClick={() => handleSubmit()}>Save</button>
             </div>
           </div>
         )}
