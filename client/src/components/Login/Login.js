@@ -9,8 +9,8 @@ export default function Login() {
           <h3 className="Auth-form-title">Log In</h3>
           <div className="text-center">
             Not registered yet?{" "}
-            <span className="link-primary" onClick={console.log("ola")}>
-              Sign Up
+            <span className="link-primary">
+              <a href="/sign-up">Sign Up</a>
             </span>
           </div>
           <div className="form-group mt-3">
