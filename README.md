@@ -4,14 +4,33 @@
 
 # Description
 
-> > 
+> > With the hustle of finding Jobs getting tougher so do our solutions. My Job website is an online space where anyone can post a job so to facilitate others to find it. I hope you'll all try it and feedbacks are all welcomed
 
 # Visuals
 
->> HOME PAGE<img src="./src/screenshots/home.png" alt="contact page"/>
+>> HOME PAGE<img src="./client/src/screenshots/job-home-page.png" alt="contact page"/>
+
+>> SIGN UP<img src="./client/src/screenshots/job-sign-up.png" alt="sign up"/>
 
 
->> CONNECT PAGE<img src="./src/screenshots/contact.png" alt="contact page"/>
+>> LOGIN <img src="./client/src/screenshots/job-login.png" alt="Login"/>
+
+
+>> JOB PAGE <img src="./client/src/screenshots/job-page.png" alt="Login"/>
+
+
+>> ADD JOBS<img src="./client/src/screenshots/job-post-job.png" alt="add jobs"/>
+
+>> JOB INFO<img src="./client/src/screenshots/job-detail-info.png" alt="job info"/>
+
+
+>> JOB REVIEWS <img src="./client/src/screenshots/job-detail-2.png" alt="job reviews"/>
+
+
+
+
+
+
 
 # 🛠 Skills
 
